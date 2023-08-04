@@ -8,7 +8,7 @@ const CreateForm = () => {
     const dispatch = useDispatch()
 
     const fetchForms = async () => {
-        const response = await fetch('http://127.0.0.1:8787/distinct').catch(err => console.log(err))
+        const response = await fetch('https://form-gamesapp.abinab.workers.dev/distinct').catch(err => console.log(err))
         const jsonRes = await response.json()
         dispatch(setForm(jsonRes.data.data))
         console.log(jsonRes)

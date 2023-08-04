@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { deleteQuestion, setQuestion } from '../redux/actions/formActions';
 
-let APIURL = 'http://127.0.0.1:8787/'
+let APIURL = 'https://form-gamesapp.abinab.workers.dev/'
 
 const FormInputElement = (props) => {
     const [rerender, setRerender] = useState(0)
@@ -31,16 +31,19 @@ const FormInputElement = (props) => {
 
 
     const deleteBtnHandler = async () => {
+        console.log("deleting from db")
         const res = await fetch(APIURL + `delete?questionId=${id}`).catch(err => console.log(err))
+        console.log("deleted from db")
+
         // setRerender(prevRerender => prevRerender + 1);
         dispatch(deleteQuestion(question))
     }
 
-    useEffect(() => {
-        console.log('aa')
-        // // Update the state variable "rerender" whenever the questions array changes
+    // useEffect(() => {
+    //     console.log('aa')
+    //     // // Update the state variable "rerender" whenever the questions array changes
 
-    }, [questions.length]);
+    // }, [questions.length]);
 
     return (
         <div>

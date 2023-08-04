@@ -39,16 +39,22 @@ export const addQuestionInputReducer = (state = questionInputInitialState, { typ
             if (Array.isArray(payload)) {
                 return { ...state, questions: payload };
             } else {
+
                 return { ...state, questions: [...state.questions, payload] };
             }
         case ActionTypes.DELETE_QUESTION:
             if (state.questions.indexOf(payload) > -1) {
+                console.log("inside delete question")
                 let index = state.questions.indexOf(payload)
-                state.questions.slice(0, index).concat(state.questions.slice(index + 1))
-                // state.questions.splice(state.questions.indexOf(payload), 1)
+                console.log(index)
+                console.log(state.questions)
+                //state.questions.splice(index, 1)
+                return { ...state, questions: [...state.questions.slice(0,index),...state.questions.slice(index+1)] }
+
             }
             return { ...state }
+
         default:
-            return state
+            return state;
     }
 }

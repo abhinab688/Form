@@ -5,7 +5,7 @@ import { setForm, removeForm, setFormTitle, addQuestionInput, removeQuestions, d
 import FormInputElement from './FormInputElement';
 import FormTitleHeader from './FormTitleHeader';
 
-const APIURL = 'http://127.0.0.1:8787/'
+const APIURL = 'https://form-gamesapp.abinab.workers.dev/'
 
 const Form = () => {
     const [rerender, setRerender] = useState(0)
@@ -30,7 +30,7 @@ const Form = () => {
     }, [dispatch])
 
     useEffect(() => {
-        console.log('aaa')
+        console.log('UseEffect on changing questions')
         setRerender(prevRerender => prevRerender + 1);
     }, [questions])
 
