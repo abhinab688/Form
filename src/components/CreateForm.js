@@ -5,18 +5,13 @@ import { setForm, setFormId, removeForm } from '../redux/actions/formActions';
 import { Link } from 'react-router-dom';
 
 const CreateForm = () => {
-    //reducer
-    // const forms = useSelector((state) => state)
     const dispatch = useDispatch()
 
     const fetchForms = async () => {
-        const response = await fetch('https://form-gamesapp.abinab.workers.dev/distinct').catch(err => console.log(err))
+        const response = await fetch('http://127.0.0.1:8787/distinct').catch(err => console.log(err))
         const jsonRes = await response.json()
         dispatch(setForm(jsonRes.data.data))
-
-        return () => {
-            dispatch(removeForm())
-        }
+        console.log(jsonRes)
 
     }
 
@@ -24,6 +19,9 @@ const CreateForm = () => {
 
     useEffect(() => {
         fetchForms()
+        return () => {
+            dispatch(removeForm())
+        }
     }, [])
 
 
@@ -38,6 +36,9 @@ const CreateForm = () => {
 
             </div>
             <div className='text-center m-5'>
+                <div>
+                    <h2>Forms</h2>
+                </div>
                 <FormItemDis />
             </div>
         </>
