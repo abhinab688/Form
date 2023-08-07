@@ -53,3 +53,10 @@ export const setQuestion = (id, question) => {
         payload: { id, question }
     }
 }
+
+export const setTimer = (timer) => {
+    return {
+        type: ActionTypes.SET_TIMER,
+        payload: timer
+    }
+}

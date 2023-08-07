@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from '../assests/download.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { setTimer } from '../redux/actions/formActions';
 
-
-const APIURL = 'https://form-gamesapp.abinab.workers.dev/'
+const APIURL = 'https://form-gamesapp.abinab.workers.dev/';
+let timeCounter = 0;
 
 const Header = () => {
+    const [showSaving, setShowSaving] = useState(false)
     const questions = useSelector((state) => state.addQuestion.questions)
+    const timer = useSelector((state) => state.addTimer.timer);
+    const dispatch = useDispatch()
     const saveBtnHandler = async () => {
         for (let i = 0; i < questions.length; i++) {
             await fetch(APIURL, {
@@ -26,6 +30,32 @@ const Header = () => {
             });
         }
     }
+
+
+    if (timer == 1) {
+        saveBtnHandler()
+    }
+
+    useEffect(() => {
+        saveBtnHandler()
+    }, [questions]);
+
+    useEffect(() => {
+        if (timer === 0) {
+            setTimeout(() => {
+                setShowSaving(true);
+            }, 1000);
+            // Show "Saving" for 1 second
+        } else if (timer === 1) {
+            setTimeout(() => {
+                setShowSaving(false);
+            }, 1000);
+        }
+    }, [showSaving, timer]);
+
+    console.log(showSaving)
+
+
     return (
         <div className='text-center row' style={{ background: "beige" }}>
             <div className='col-3 mt-2 mb-2'>
@@ -34,8 +64,9 @@ const Header = () => {
             <div className='col-5'>
                 <h1>GamesApp</h1>
             </div>
+            { }
             <div className='col-3 mt-3 position-absolute top-0 end-0'>
-                {questions.length > 0 && (<button className='btn btn-sm btn-primary' onClick={saveBtnHandler}> Save</button>)}
+                {showSaving && <p>Saving...</p>}
             </div>
         </div>
     )

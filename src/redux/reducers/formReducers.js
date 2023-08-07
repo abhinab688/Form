@@ -13,6 +13,14 @@ export const formReducer = (state = initialState, { type, payload }) => {
     }
 }
 
+export const setTimeReducer = (state = { timer: "" }, { type, payload }) => {
+    switch (type) {
+        case ActionTypes.SET_TIMER:
+            return { timer: payload }
+        default:
+            return state
+    }
+}
 
 export const selectedFormReducer = (state = { formId: "", formTitle: "", question: "", type: "" }, { type, payload }) => {
     switch (type) {
@@ -49,7 +57,7 @@ export const addQuestionInputReducer = (state = questionInputInitialState, { typ
                 console.log(index)
                 console.log(state.questions)
                 //state.questions.splice(index, 1)
-                return { ...state, questions: [...state.questions.slice(0,index),...state.questions.slice(index+1)] }
+                return { ...state, questions: [...state.questions.slice(0, index), ...state.questions.slice(index + 1)] }
 
             }
             return { ...state }

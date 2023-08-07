@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addQuestionInput, setFormTitle } from '../redux/actions/formActions';
+import { addQuestionInput, setFormTitle, setTimer } from '../redux/actions/formActions';
 
 const FormTitleHeader = (props) => {
-    console.log(props.formId)
     const questions = useSelector((state) => state.addQuestion.questions)
     const formTitle = useSelector((state) => state.form.formTitle)
+    const timer = useSelector((state) => state.addTimer.timer);
     const dispatch = useDispatch()
     const questionId = Math.floor(100 + Math.random() * 900);
     const addNewQuestionhandler = () => {
@@ -21,7 +21,14 @@ const FormTitleHeader = (props) => {
 
     const titleChangeHandler = (e) => {
         dispatch(setFormTitle(e.target.value))
+        dispatch(setTimer(0))
 
+    }
+
+    if (timer == 0) {
+        setTimeout(() => {
+            dispatch(setTimer(1))
+        }, 2000)
     }
     questions.map(question => {
         question.name = formTitle

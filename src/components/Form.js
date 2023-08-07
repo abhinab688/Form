@@ -30,7 +30,6 @@ const Form = () => {
     }, [dispatch])
 
     useEffect(() => {
-        console.log('UseEffect on changing questions')
         setRerender(prevRerender => prevRerender + 1);
     }, [questions])
 

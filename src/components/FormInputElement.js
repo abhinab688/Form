@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import FormTitleHeader from './FormTitleHeader'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
-import { deleteQuestion, setQuestion } from '../redux/actions/formActions';
+import { deleteQuestion, setQuestion, setTimer } from '../redux/actions/formActions';
 
 let APIURL = 'https://form-gamesapp.abinab.workers.dev/'
 
 const FormInputElement = (props) => {
     const [rerender, setRerender] = useState(0)
+    const timer = useSelector((state) => state.addTimer.timer);
     const questions = useSelector((state) => state.addQuestion.questions)
     const [questionText, setQuestionText] = useState();
     const { formId } = useParams();
@@ -23,10 +24,18 @@ const FormInputElement = (props) => {
 
     const setQuestionHandler = (e) => {
         question.question = e.target.value;
+        dispatch(setTimer(0))
     }
 
     const typeChangehandler = (e) => {
         question.type = e.target.value;
+        dispatch(setTimer(0))
+    }
+
+    if (timer == 0) {
+        setTimeout(() => {
+            dispatch(setTimer(1))
+        }, 2000)
     }
 
 
@@ -34,16 +43,9 @@ const FormInputElement = (props) => {
         console.log("deleting from db")
         const res = await fetch(APIURL + `delete?questionId=${id}`).catch(err => console.log(err))
         console.log("deleted from db")
-
-        // setRerender(prevRerender => prevRerender + 1);
         dispatch(deleteQuestion(question))
     }
 
-    // useEffect(() => {
-    //     console.log('aa')
-    //     // // Update the state variable "rerender" whenever the questions array changes
-
-    // }, [questions.length]);
 
     return (
         <div>
